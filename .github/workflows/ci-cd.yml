@@ -47,9 +47,9 @@ jobs:
       - name: Push Docker Image to Google Artifact Registry
         run: docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/gke-terraform-api:v1.0.0
 
-      # - name: Terraform Init
-      #   run: terraform init
-      #   working-directory: ./terraform
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./terraform
 
       - name: Terraform Apply
         run: terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -auto-approve -lock=false
