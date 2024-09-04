@@ -50,6 +50,7 @@ jobs:
       # - name: Terraform Init
       #   run: terraform init
       #   working-directory: ./terraform
+      
 
       - name: Terraform Apply
         run: terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -auto-approve -lock=false
