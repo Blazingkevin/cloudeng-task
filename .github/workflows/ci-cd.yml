@@ -22,10 +22,6 @@ jobs:
         with:
           version: "latest"
 
-      - name: Docker configuration
-        run: |
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
-
       - name: Set up GKE credentials
         uses: google-github-actions/get-gke-credentials@v2
         with:
@@ -43,6 +39,10 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Docker configuration
+        run: |
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
 
       - name: Build Docker Image
         run: docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/gke-terraform-api:v1.0.0 .
@@ -93,4 +93,3 @@ jobs:
           API_BASE_ENDPOINT=$(terraform output -raw kubernetes_endpoint)
           echo "Hitting API at $API_BASE_ENDPOINT"
           curl -f http://$API_BASE_ENDPOINT/time || exit 1
-
