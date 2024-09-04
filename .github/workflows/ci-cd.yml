@@ -59,13 +59,16 @@ jobs:
       #   working-directory: ./terraform
 
       - name: Terraform Apply
-        run: terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="kube_config_path=${{ env.KUBE_CONFIG_PATH }}" -auto-approve -lock=false
+        run: |
+          terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="kube_config_path=${{ env.KUBE_CONFIG_PATH }}" -auto-approve -lock=false
+          API_BASE_ENDPOINT=$(terraform output -raw kubernetes_endpoint)
+          curl -f http://$API_BASE_ENDPOINT/time || exit 1
         working-directory: ./terraform
 
-      - name: Test API Endpoint
-        run: |
-          sleep 60  # Wait for the LoadBalancer to get an IP and for the time service to be ready
-          API_BASE_ENDPOINT=$(terraform output -raw kubernetes_endpoint)
-          echo "Hitting API at $API_BASE_ENDPOINT"
-          curl -f http://$API_BASE_ENDPOINT/time || exit 1
+      # - name: Test API Endpoint
+      #   run: |
+      #     sleep 60  # Wait for the LoadBalancer to get an IP and for the time service to be ready
+      #     API_BASE_ENDPOINT=$(terraform output -raw kubernetes_endpoint)
+      #     echo "Hitting API at $API_BASE_ENDPOINT"
+      #     curl -f http://$API_BASE_ENDPOINT/time || exit 1
 
