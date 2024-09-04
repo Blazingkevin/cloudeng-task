@@ -69,7 +69,7 @@ jobs:
       #     name: terraform-state
       #     path: ./terraform/terraform.tfstate
 
-      - name: Test API Endpoint
+      - name: Test API Endpoint TO GET CURRENT TIMEs
         run: |
           sleep 60  # Wait for the LoadBalancer to get an IP and for the service to be ready
           echo "Running terraform output"
