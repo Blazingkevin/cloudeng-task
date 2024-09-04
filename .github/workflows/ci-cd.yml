@@ -62,11 +62,11 @@ jobs:
           terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="kube_config_path=${{ env.KUBE_CONFIG_PATH }}" -auto-approve
         working-directory: ./terraform
 
-      - name: Upload Terraform State
-        uses: actions/upload-artifact@v3
-        with:
-          name: terraform-state
-          path: ./terraform/terraform.tfstate
+      # - name: Upload Terraform State
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: terraform-state
+      #     path: ./terraform/terraform.tfstate
 
       - name: Test API Endpoint
         run: |
