@@ -62,10 +62,23 @@ jobs:
           terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="kube_config_path=${{ env.KUBE_CONFIG_PATH }}" -auto-approve
         working-directory: ./terraform
 
+      - name: Upload Terraform State
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-state
+          path: ./terraform/terraform.tfstate
+
       - name: Test API Endpoint
         run: |
           sleep 60  # Wait for the LoadBalancer to get an IP and for the service to be ready
+          echo "Running terraform output"
+          terraform output -raw kubernetes_endpoint
           API_ENDPOINT=$(terraform output -raw kubernetes_endpoint)
+          echo "API_ENDPOINT is: $API_ENDPOINT"
+          if [[ -z "$API_ENDPOINT" ]]; then
+            echo "Error: Kubernetes endpoint is empty!"
+            exit 1
+          fi
           echo "Hitting API at $API_ENDPOINT"
           curl -f http://$API_ENDPOINT/ || exit 1
         working-directory: ./terraform
