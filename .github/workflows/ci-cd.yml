@@ -42,6 +42,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.9.5
+          terraform_wrapper: false
 
       - name: Export Kubeconfig
         run: |
@@ -74,11 +75,6 @@ jobs:
           echo "Running terraform output"
           terraform output -raw kubernetes_endpoint
           API_ENDPOINT=$(terraform output -raw kubernetes_endpoint)
-          echo "API_ENDPOINT is: $API_ENDPOINT"
-          if [[ -z "$API_ENDPOINT" ]]; then
-            echo "Error: Kubernetes endpoint is empty!"
-            exit 1
-          fi
           echo "Hitting API at $API_ENDPOINT"
-          curl -f http://$API_ENDPOINT/ || exit 1
+          curl -f http://$API_ENDPOINT/time || exit 1
         working-directory: ./terraform
