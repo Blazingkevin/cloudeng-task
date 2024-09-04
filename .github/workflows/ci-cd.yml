@@ -52,7 +52,7 @@ jobs:
       #   working-directory: ./terraform
 
       - name: Terraform Apply
-        run: terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -auto-approve -lock=false
+        run: terraform apply -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="kube_config_path=${{ env.KUBE_CONFIG_PATH }}" -auto-approve -lock=false
         working-directory: ./terraform
 
       - name: Test API Endpoint

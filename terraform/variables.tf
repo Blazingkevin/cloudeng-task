@@ -20,3 +20,8 @@ variable "vpc_name" {
   type        = string
   default     = "gke-vpc2"
 }
+
+variable "kube_config_path" {
+  description = "The path to the Kubernetes config file."
+  default     = "~/.kube/config"
+}

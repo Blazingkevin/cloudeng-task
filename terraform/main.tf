@@ -7,7 +7,7 @@ provider "google" {
 }
 
 provider "kubernetes" {
-  config_path = "~/.kube/config"
+  config_path = var.kube_config_path
 }
 
 module "network" {
