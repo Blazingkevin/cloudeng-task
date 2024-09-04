@@ -68,3 +68,4 @@ jobs:
           API_ENDPOINT=$(terraform output -raw kubernetes_endpoint)
           echo "Hitting API at $API_ENDPOINT"
           curl -f http://$API_ENDPOINT/ || exit 1
+        working-directory: ./terraform
