@@ -66,3 +66,4 @@ jobs:
           API_BASE_ENDPOINT=$(terraform output -raw kubernetes_endpoint)
           echo "Hitting API at $API_BASE_ENDPOINT"
           curl -f http://$API_BASE_ENDPOINT/time || exit 1
+
