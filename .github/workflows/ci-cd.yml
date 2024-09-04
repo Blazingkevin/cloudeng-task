@@ -22,14 +22,20 @@ jobs:
         with:
           version: "latest"
 
+      - name: Docker configuration
+        run: |
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
+
+      - name: Set up GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: "${{ secrets.GKE_CLUSTER_NAME }}"
+          location: "us-central1"
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.9.5
-
-      - name: Authenticate Docker to Artifact Registry
-        run: |
-          echo "${{ secrets.GCP_SA_KEY }}" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev
 
   build_and_push_docker:
     runs-on: ubuntu-latest
