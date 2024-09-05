@@ -1,5 +1,5 @@
 resource "google_service_account" "k8s_sa" {
-  account_id   = "k8s-service-account2"
+  account_id   = "k8s-service-account3"
   display_name = "Kubernetes Service Account"
 
   provisioner "local-exec" {

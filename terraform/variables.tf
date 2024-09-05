@@ -12,13 +12,13 @@ variable "region" {
 variable "cluster_name" {
   description = "The name of the GKE cluster"
   type        = string
-  default     = "gke-cluster2"
+  default     = "gke-cluster"
 }
 
 variable "vpc_name" {
   description = "The name of the VPC"
   type        = string
-  default     = "gke-vpc2"
+  default     = "gke-vpc"
 }
 
 variable "kube_config_path" {

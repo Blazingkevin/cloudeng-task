@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "kevin-terraform-state-bucket2"
-    prefix = "gke-terraform-api2"
+    bucket = "kevin-terraform-state-bucket3"
+    prefix = "gke-terraform-api3"
   }
 }

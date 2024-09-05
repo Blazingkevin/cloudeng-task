@@ -10,7 +10,7 @@ resource "google_compute_subnetwork" "subnetwork" {
 }
 
 resource "google_compute_router" "nat_router" {
-  name    = "nat-router2"
+  name    = "nat-router"
   network = google_compute_network.vpc_network.name
   region  = var.region
 }
